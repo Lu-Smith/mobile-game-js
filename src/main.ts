@@ -10,6 +10,7 @@ window.addEventListener('load', function() {
 
     if(ctx) {
       const game = new Game(canvas, ctx);
+      game.render();
     }
   }
 });
