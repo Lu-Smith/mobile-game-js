@@ -1,8 +1,6 @@
-import './style.css'
-import { setupCounter } from './counter.ts'
+import './style.css';
+import Game from './classGame';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-    <canvas id="canvas1"></canvas>
-`
-
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+window.addEventListener('load', function() {
+  const canvas = document.getElementById('canvas1');
+});
