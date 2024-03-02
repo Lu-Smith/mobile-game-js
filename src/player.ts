@@ -17,7 +17,6 @@ export default class Player {
 
     draw() {
         this.game.context.fillRect(this.x, this.y, this.width, this.height);
-        console.log(this.game.context.fillRect(this.x, this.y, this.width, this.height));
     }
     update() {
         this.x++;
