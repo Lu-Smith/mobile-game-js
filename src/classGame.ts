@@ -16,9 +16,11 @@ export default class Game {
 
         this.resize(window.innerWidth, window.innerHeight);
 
-        window.addEventListener('resize', e => {
-            console.log(e.currentTarget.innerWidth);
-            this.resize(e.currentTarget.innerWidth, e.currentTarget.innerHeight)       
+        window.addEventListener('resize', (e: UIEvent) => {
+            const target = e.currentTarget as Window;
+            if (target) {
+                this.resize(target.innerWidth, target.innerHeight);
+            }
         })
     }
     resize(width: number, height: number) {
