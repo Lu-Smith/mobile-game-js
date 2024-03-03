@@ -25,16 +25,19 @@ export default class Player {
     }
     update() {
         this.y += this.speedY;
-        if (this.y < this.game.height - this.height) {
+        if (!this.isTouchingBottom()) {
             this.speedY += this.game.gravity;
         }
 
-        if (this.y >= this.game.height - this.height) {
+        if (this.isTouchingBottom()) {
             this.y = this.game.height - this.height;
         }
     } 
     resize() {
         this.width = this.spriteWidth * this.game.ratio;
         this.height = this.spriteHeight * this.game.ratio;
+    }
+    isTouchingBottom() {
+        return this.y >= this.game.height - this.height;
     }
 }
