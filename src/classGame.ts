@@ -18,7 +18,7 @@ export default class Game {
         this.baseHeight = 720;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
         this.player = new Player(this);
-        this.gravity = 1;
+        this.gravity = 0;
 
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -36,6 +36,7 @@ export default class Game {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
+        this.gravity = 0.15 * this.ratio;
         this.player.resize();
     }
     render() {
