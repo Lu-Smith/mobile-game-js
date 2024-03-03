@@ -13,11 +13,11 @@ export default class Player {
     constructor(game: Game) {
         this.game =  game;
         this.x = 50;
-        this.y = 60;
+        this.y = 0;
         this.spriteWidth = 200;
         this.spriteHeight = 200;
-        this.width = 200;
-        this.height = 200;
+        this.width = 0;
+        this.height = 0;
         this.speedY = 0;
     }
     draw() {
@@ -36,6 +36,8 @@ export default class Player {
     resize() {
         this.width = this.spriteWidth * this.game.ratio;
         this.height = this.spriteHeight * this.game.ratio;
+        this.y = this.game.height * 0.5 - this.height * 0.5;
+        this.speedY = -4 * this.game.ratio;
     }
     isTouchingBottom() {
         return this.y >= this.game.height - this.height;
