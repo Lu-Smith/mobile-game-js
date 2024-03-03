@@ -8,6 +8,7 @@ export default class Game {
     player: Player;
     baseHeight: number;
     ratio: number;
+    gravity: number;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -17,6 +18,7 @@ export default class Game {
         this.baseHeight = 720;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
         this.player = new Player(this);
+        this.gravity = 1;
 
         this.resize(window.innerWidth, window.innerHeight);
 
