@@ -8,20 +8,19 @@ export default class Player {
     height: number;
     spriteWidth: number;
     spriteHeight: number;
-    speedY = 0;
+    speedY: number;
+    flapSpeed: number;
 
     constructor(game: Game) {
         this.game =  game;
-        this.x = 50;
+        this.x = 20;
         this.y = 0;
         this.spriteWidth = 200;
         this.spriteHeight = 200;
         this.width = 0;
         this.height = 0;
         this.speedY = 0;
-    }
-    draw() {
-        this.game.context.fillRect(this.x, this.y, this.width, this.height);
+        this.flapSpeed = 0;
     }
     update() {
         this.y += this.speedY;
@@ -33,13 +32,27 @@ export default class Player {
             this.y = this.game.height - this.height;
         }
     } 
+    draw() {
+        this.game.context.fillRect(this.x, this.y, this.width, this.height);
+    }
     resize() {
         this.width = this.spriteWidth * this.game.ratio;
         this.height = this.spriteHeight * this.game.ratio;
         this.y = this.game.height * 0.5 - this.height * 0.5;
-        this.speedY = -4 * this.game.ratio;
+        this.speedY = -8 * this.game.ratio;
+        this.flapSpeed = 5 * this.game.ratio;
+    }
+    isTouchingTop() {
+        return this.y <= 100;
     }
     isTouchingBottom() {
         return this.y >= this.game.height - this.height;
+    }
+    flap() {
+        console.log( this.y)
+        if(!this.isTouchingTop()) {
+            this.speedY = -this.flapSpeed;
+        }
+      
     }
 }
