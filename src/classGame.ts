@@ -27,7 +27,22 @@ export default class Game {
             if (target) {
                 this.resize(target.innerWidth, target.innerHeight);
             }
-        })
+        }); 
+
+        //mouse controls      
+        this.canvas.addEventListener('mousedown', e => {
+            this.player.flap();
+        });  
+
+        //mouse controls
+         window.addEventListener('keydown', e => {
+            if (e.key === ' ' || e.key === 'Enter') this.player.flap();
+        });
+
+        //mouse controls
+        this.canvas.addEventListener('touchstart', e => {
+            this.player.flap();
+        });
     }
     resize(width: number, height: number) {
         this.canvas.width = width;
