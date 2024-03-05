@@ -11,6 +11,7 @@ export default class Game {
     baseHeight: number;
     ratio: number;
     gravity: number;
+    speed: number;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -22,6 +23,7 @@ export default class Game {
         this.background = new Background(this);
         this.player = new Player(this);
         this.gravity = 0;
+        this.speed = 0;
 
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -55,6 +57,8 @@ export default class Game {
         this.height = this.canvas.height;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
         this.gravity = 0.15 * this.ratio;
+        this.speed = 3;
+        this.background.resize();
         this.player.resize();
     }
     render() {
