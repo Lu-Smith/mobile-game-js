@@ -63,6 +63,7 @@ export default class Game {
         this.canvas.width = width;
         this.canvas.height = height;
         this.context.fillStyle = 'blue';
+        this.context.textAlign = 'right';
         this.context.font = '15px Bungee';
         this.width = this.canvas.width;
         this.height = this.canvas.height;
@@ -100,6 +101,8 @@ export default class Game {
 
     }
     drawStatusText() {
-        this.context.fillText('Score: ' + this.score, 10, 30);
+        this.context.save();
+        this.context.fillText('Score: ' + this.score, this.width - 10, 30);
+        this.context.restore();
     }
 }
