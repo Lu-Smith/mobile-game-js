@@ -8,7 +8,8 @@ export default class Obstacle {
     scaledHeigth: number;
     x: number;
     y: number;
-    speedY = 2;
+    speedY: number;
+    markedForDeletion: boolean;
 
     constructor(game: Game, x: number) {
         this.game = game;
@@ -19,12 +20,18 @@ export default class Obstacle {
         this.x = x;
         this.y = Math.random() * (this.game.height - this.scaledHeigth);
         this.speedY = Math.random() < 0.5  ? -1 * this.game.ratio : 1 * this.game.ratio;
+        this.markedForDeletion = false;
     }
     update() {
         this.x -= this.game.speed;
         this.y += this.speedY;
         if (this.y <= 0 || this.y >= this.game.height - this.scaledHeigth) {
             this.speedY *= -1;
+        }
+        if (this.isOffScreen()) {
+            this.markedForDeletion = true;
+            this.game.obstacles = this.game.obstacles.filter(obstacle => !obstacle.markedForDeletion);
+            console.log(this.game.obstacles.length);
         }
     } 
     draw(){
@@ -33,5 +40,8 @@ export default class Obstacle {
     resize(){
         this.scaledWidth = this.spriteWidth * this.game.ratio;
         this.scaledHeigth = this.spriteHeigth * this.game.ratio;
+    }
+    isOffScreen() {
+        return this.x < 0;
     }
 }
