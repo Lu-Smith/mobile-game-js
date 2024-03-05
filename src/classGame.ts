@@ -63,6 +63,7 @@ export default class Game {
         this.canvas.width = width;
         this.canvas.height = height;
         this.context.fillStyle = 'blue';
+        this.context.font = '15px Bungee';
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
@@ -81,6 +82,7 @@ export default class Game {
     render() {
         this.background.update();
         this.background.draw();
+        this.drawStatusText();
         this.player.update();
         this.player.draw();
         this.obstacles.forEach(obstacle => {
@@ -96,5 +98,8 @@ export default class Game {
             this.obstacles.push(new Obstacle(this, (firstX + i * obstacleSpacing)));
         }
 
+    }
+    drawStatusText() {
+        this.context.fillText('Score: ' + this.score, 10, 30);
     }
 }
