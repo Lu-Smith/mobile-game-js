@@ -15,6 +15,8 @@ export default class Game {
     ratio: number;
     gravity: number;
     speed: number;
+    score: number;
+    gameOver: boolean;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -27,8 +29,11 @@ export default class Game {
         this.player = new Player(this);
         this.obstacles = [];
         this.numberOfObstacles = 10;
-        this.gravity = 0;
+        this.gravity = 0; 
         this.speed = 0;
+        this.score = 0;
+        this.gameOver = false;
+        
 
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -69,6 +74,9 @@ export default class Game {
         this.obstacles.forEach(obstacle => {
             obstacle.resize();
         })
+        this.score = 0;
+        this.gameOver = false;
+
     }
     render() {
         this.background.update();
