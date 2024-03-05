@@ -1,4 +1,5 @@
 import Player from './player';
+import Background from './background';
 
 export default class Game {
     canvas: HTMLCanvasElement;
@@ -6,6 +7,7 @@ export default class Game {
     width: number;
     height: number;
     player: Player;
+    background: Background;
     baseHeight: number;
     ratio: number;
     gravity: number;
@@ -17,6 +19,7 @@ export default class Game {
         this.height = this.canvas.height;
         this.baseHeight = 720;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
+        this.background = new Background(this);
         this.player = new Player(this);
         this.gravity = 0;
 
@@ -55,6 +58,8 @@ export default class Game {
         this.player.resize();
     }
     render() {
+        this.background.update();
+        this.background.draw();
         this.player.update();
         this.player.draw();
     }
