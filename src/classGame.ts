@@ -28,6 +28,9 @@ export default class Game {
     message2: string;
     minSpeed: number;
     maxSpeed: number;
+    eventTimer: number;
+    eventInterval: number;
+    eventUpdate: boolean;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -49,6 +52,9 @@ export default class Game {
         this.message2 = '';
         this.minSpeed = 0;
         this.maxSpeed = 0;
+        this.eventTimer = 0;
+        this.eventInterval = 150;
+        this.eventUpdate = false;
         
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -78,7 +84,7 @@ export default class Game {
     resize(width: number, height: number) {
         this.canvas.width = width;
         this.canvas.height = height;
-        this.context.fillStyle = 'blue';
+        // this.context.fillStyle = 'blue';
         this.context.textAlign = 'right';
         this.context.lineWidth = 3;
         this.context.strokeStyle = 'white';
@@ -104,6 +110,7 @@ export default class Game {
     }
     render(deltaTime: number) {
         if (!this.gameOver) this.timer += deltaTime;
+        this.handlePeriodicEvents(deltaTime);
         this.background.update();
         this.background.draw();
         this.drawStatusText();
@@ -133,6 +140,15 @@ export default class Game {
     formatTimer() {
         return (this.timer * 0.001).toFixed(1);
     }
+    handlePeriodicEvents(deltaTime: number) {
+        if (this.eventTimer < this.eventInterval) {
+            this.eventTimer += deltaTime;
+            this.eventUpdate = false;
+        } else {
+            this.eventTimer = 0;
+            this.eventUpdate = true;
+        }
+    }
     drawStatusText() {   
         this.context.save();  
         this.context.fillText('Score: ' + this.score, this.width - 10, 30);
@@ -156,7 +172,7 @@ export default class Game {
         if (this.player.energy <= 20) this.context.fillStyle = 'red';
         else if (this.player.energy >= this.player.maxEnergy - 5) this.context.fillStyle = 'green';
         for (let i = 0; i < this.player.energy; i++) {
-            this.context.fillRect(10, this.height - 20 - this.player.barSize * i, 3 * this.player.barSize, this.player.barSize);
+            this.context.fillRect(10, this.height - 20 - this.player.barSize * i, 4 * this.player.barSize, this.player.barSize);
         } 
         this.context.restore();
     }
