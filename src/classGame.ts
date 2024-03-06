@@ -66,6 +66,8 @@ export default class Game {
         this.canvas.height = height;
         this.context.fillStyle = 'blue';
         this.context.textAlign = 'right';
+        this.context.lineWidth = 3;
+        this.context.strokeStyle = 'white';
         this.context.font = '15px Bungee';
         this.width = this.canvas.width;
         this.height = this.canvas.height;
