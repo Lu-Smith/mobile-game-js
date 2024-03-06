@@ -17,6 +17,7 @@ export default class Game {
     speed: number;
     score: number;
     gameOver: boolean;
+    timer: number;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -33,6 +34,7 @@ export default class Game {
         this.speed = 0;
         this.score = 0;
         this.gameOver = false;
+        this.timer = 0;
         
 
         this.resize(window.innerWidth, window.innerHeight);
@@ -45,7 +47,7 @@ export default class Game {
         }); 
 
         //mouse controls      
-        this.canvas.addEventListener('mousedown', e => {
+        this.canvas.addEventListener('mousedown', () => {
             this.player.flap();
         });  
 
@@ -55,7 +57,7 @@ export default class Game {
         });
 
         //mouse controls
-        this.canvas.addEventListener('touchstart', e => {
+        this.canvas.addEventListener('touchstart', () => {
             this.player.flap();
         });
     }
@@ -78,9 +80,11 @@ export default class Game {
         })
         this.score = 0;
         this.gameOver = false;
+        this.timer = 0;
 
     }
-    render() {
+    render(deltaTime: number) {
+        this.timer += deltaTime;
         this.background.update();
         this.background.draw();
         this.drawStatusText();
@@ -100,9 +104,14 @@ export default class Game {
         }
 
     }
+    formatTimer() {
+        return (this.timer * 0.001).toFixed(1);
+    }
     drawStatusText() {
         this.context.save();
         this.context.fillText('Score: ' + this.score, this.width - 10, 30);
+        this.context.textAlign = 'left';
+        this.context.fillText('Timer: ' + this.formatTimer(), 10, 30);
         this.context.restore();
     }
 }
