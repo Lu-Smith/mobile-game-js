@@ -17,6 +17,8 @@ export default class Player {
     energy: number;
     maxEnergy: number;
     minEnergy: number;
+    charging: boolean;
+    barSize: number;
 
     constructor(game: Game) {
         this.game =  game;
@@ -35,6 +37,8 @@ export default class Player {
         this.energy = 30;
         this.maxEnergy = this.energy * 2;
         this.minEnergy = 15;
+        this.charging = false;
+        this.barSize = 0;
     }
     update() {
         this.handleEnergy()
@@ -49,7 +53,7 @@ export default class Player {
         }
     } 
     draw() {
-        this.game.context.fillRect(this.x, this.y, this.width, this.height);
+        this.game.context.strokeRect(this.x, this.y, this.width, this.height);
         this.game.context.beginPath();
         this.game.context.arc(this.collisionX, this.collisionY, 
             this.collisionRadius, 0, Math.PI * 2);
@@ -64,12 +68,15 @@ export default class Player {
         this.collisionRadius = this.width * 0.5;
         this.collisionX = this.x + this.width * 0.5;
         this.collided = false;
+        this.barSize = Math.floor(5 * this.game.ratio);
     }
     startCharge() {
-
+        this.charging = true;
+        this.game.speed = this.game.maxSpeed;
     }
     stopCharge() {
-        
+        this.charging = false;
+        this.game.speed = this.game.minSpeed;
     }
     isTouchingTop() {
         return this.y <= 100;
@@ -80,6 +87,13 @@ export default class Player {
     handleEnergy() {
         if (this.energy < this.maxEnergy) {
             this.energy += 0.1;
+        }
+        if (this.charging) {
+            this.energy -= 1;
+            if (this.energy <= 0) {
+                this.energy = 0;
+                this.startCharge();
+            }
         }
     }
     flap() {
