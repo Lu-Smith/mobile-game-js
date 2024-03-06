@@ -67,6 +67,7 @@ export default class Game {
         //mouse controls
          window.addEventListener('keydown', e => {
             if (e.key === ' ' || e.key === 'Enter') this.player.flap();
+            if (e.key === 'Shift' || e.key.toLowerCase() === 'c') this.player.startCharge();
         });
 
         //mouse controls
@@ -85,8 +86,11 @@ export default class Game {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
+
         this.gravity = 0.15 * this.ratio;
         this.speed = 2 * this.ratio;
+        this.minSpeed = this.speed;
+        this.maxSpeed = this.speed * 5;
         this.background.resize();
         this.player.resize();
         this.createObstacles();
@@ -129,7 +133,8 @@ export default class Game {
     formatTimer() {
         return (this.timer * 0.001).toFixed(1);
     }
-    drawStatusText() {     
+    drawStatusText() {   
+        this.context.save();  
         this.context.fillText('Score: ' + this.score, this.width - 10, 30);
         this.context.textAlign = 'left';
         this.context.fillText('Timer: ' + this.formatTimer(), 10, 30); 
@@ -148,9 +153,10 @@ export default class Game {
             this.context.fillText(this.message2, this.width * 0.5, this.height * 0.5 - 20);
             this.context.fillText('Press "R" to try again!', this.width * 0.5, this.height * 0.5);
         }
-        this.context.save();
+        if (this.player.energy <= 20) this.context.fillStyle = 'red';
+        else if (this.player.energy >= this.player.maxEnergy - 5) this.context.fillStyle = 'green';
         for (let i = 0; i < this.player.energy; i++) {
-            this.context.fillRect(10 + i * 5, 40, 2, 15);
+            this.context.fillRect(10, this.height - 20 - this.player.barSize * i, 3 * this.player.barSize, this.player.barSize);
         } 
         this.context.restore();
     }
