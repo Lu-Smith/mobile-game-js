@@ -19,6 +19,7 @@ export default class Player {
     minEnergy: number;
     charging: boolean;
     barSize: number;
+    image: CanvasImageSource;
 
     constructor(game: Game) {
         this.game =  game;
@@ -39,13 +40,16 @@ export default class Player {
         this.minEnergy = 15;
         this.charging = false;
         this.barSize = 0;
+        this.image = document.getElementById('player_fish') as CanvasImageSource;;
     }
     update() {
         this.handleEnergy();
         this.y += this.speedY;
         this.collisionY = this.y + this.height * 0.5;
-        if (!this.isTouchingBottom()) {
+        if (!this.isTouchingBottom() && !this.charging) {
             this.speedY += this.game.gravity;
+        } else {
+            this.speedY = 0;    
         }
 
         if (this.isTouchingBottom()) {
@@ -53,7 +57,7 @@ export default class Player {
         }
     } 
     draw() {
-        this.game.context.strokeRect(this.x, this.y, this.width, this.height);
+        this.game.context.drawImage(this.image, 0, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
         this.game.context.beginPath();
         this.game.context.arc(this.collisionX, this.collisionY, 
             this.collisionRadius, 0, Math.PI * 2);
