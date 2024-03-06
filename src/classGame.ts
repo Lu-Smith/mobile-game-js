@@ -29,7 +29,7 @@ export default class Game {
         this.background = new Background(this);
         this.player = new Player(this);
         this.obstacles = [];
-        this.numberOfObstacles = 10;
+        this.numberOfObstacles = 1;
         this.gravity = 0; 
         this.speed = 0;
         this.score = 0;
@@ -84,7 +84,7 @@ export default class Game {
 
     }
     render(deltaTime: number) {
-        this.timer += deltaTime;
+        if (!this.gameOver) this.timer += deltaTime;
         this.background.update();
         this.background.draw();
         this.drawStatusText();
@@ -111,7 +111,12 @@ export default class Game {
         this.context.save();
         this.context.fillText('Score: ' + this.score, this.width - 10, 30);
         this.context.textAlign = 'left';
-        this.context.fillText('Timer: ' + this.formatTimer(), 10, 30);
+        this.context.fillText('Timer: ' + this.formatTimer(), 10, 30); 
+        if (this.gameOver) {
+            this.context.textAlign = 'center';
+            this.context.font = '30px Bungee';
+            this.context.fillText('GameOver', this.width * 0.5, this.height * 0.5);
+        }
         this.context.restore();
     }
 }
