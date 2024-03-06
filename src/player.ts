@@ -85,19 +85,21 @@ export default class Player {
         return this.y >= this.game.height - this.height;
     }
     handleEnergy() {
-        if (this.energy < this.maxEnergy) {
-            this.energy += 0.1;
-        }
-        if (this.charging) {
-            this.energy -= 1;
-            if (this.energy <= 0) {
-                this.energy = 0;
-                this.stopCharge();
+        if (this.game.eventUpdate) {
+            if (this.energy < this.maxEnergy) {
+                this.energy +=  1;
+            }
+            if (this.charging) {
+                this.energy -= 4           ;     
+                if (this.energy <= 0) {
+                    this.energy = 0;
+                    this.stopCharge();  
+                }
             }
         }
-    }
-    flap() {
-        console.log( this.y)
+    } 
+    flap() {          
+        this.stopCharge();
         if(!this.isTouchingTop()) {
             this.speedY = -this.flapSpeed;
         }
