@@ -14,6 +14,9 @@ export default class Player {
     collisionY: number;
     collisionRadius: number;
     collided: boolean;
+    energy: number;
+    maxEnergy: number;
+    minEnergy: number;
 
     constructor(game: Game) {
         this.game =  game;
@@ -29,8 +32,12 @@ export default class Player {
         this.collisionY = 0;
         this.collisionRadius = 0;
         this.collided = false;
+        this.energy = 30;
+        this.maxEnergy = this.energy * 2;
+        this.minEnergy = 15;
     }
     update() {
+        this.handleEnergy()
         this.y += this.speedY;
         this.collisionY = this.y + this.height * 0.5;
         if (!this.isTouchingBottom()) {
@@ -58,11 +65,22 @@ export default class Player {
         this.collisionX = this.x + this.width * 0.5;
         this.collided = false;
     }
+    startCharge() {
+
+    }
+    stopCharge() {
+        
+    }
     isTouchingTop() {
         return this.y <= 100;
     }
     isTouchingBottom() {
         return this.y >= this.game.height - this.height;
+    }
+    handleEnergy() {
+        if (this.energy < this.maxEnergy) {
+            this.energy += 0.1;
+        }
     }
     flap() {
         console.log( this.y)
