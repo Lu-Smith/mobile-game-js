@@ -42,6 +42,10 @@ export default class Obstacle {
             this.game.score++;
             if (this.game.obstacles.length <= 0) this.game.gameOver = true;
         }
+        if (this.game.checkCollision(this, this.game.player)) {
+            this.game.gameOver = true;
+            this.game.player.collided = true;
+        }
     } 
     draw(){
         this.game.context.fillRect(this.x, this.y, this.scaledWidth, this.scaledHeigth);
