@@ -13,6 +13,7 @@ export default class Player {
     collisionX: number;
     collisionY: number;
     collisionRadius: number;
+    collided: boolean;
 
     constructor(game: Game) {
         this.game =  game;
@@ -27,6 +28,7 @@ export default class Player {
         this.collisionX = 0;
         this.collisionY = 0;
         this.collisionRadius = 0;
+        this.collided = false;
     }
     update() {
         this.y += this.speedY;
@@ -54,6 +56,7 @@ export default class Player {
         this.flapSpeed = 5 * this.game.ratio;
         this.collisionRadius = this.width * 0.5;
         this.collisionX = this.x + this.width * 0.5;
+        this.collided = false;
     }
     isTouchingTop() {
         return this.y <= 100;
