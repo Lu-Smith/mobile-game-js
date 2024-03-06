@@ -41,7 +41,7 @@ export default class Player {
         this.barSize = 0;
     }
     update() {
-        this.handleEnergy()
+        this.handleEnergy();
         this.y += this.speedY;
         this.collisionY = this.y + this.height * 0.5;
         if (!this.isTouchingBottom()) {
@@ -92,7 +92,7 @@ export default class Player {
             this.energy -= 1;
             if (this.energy <= 0) {
                 this.energy = 0;
-                this.startCharge();
+                this.stopCharge();
             }
         }
     }
