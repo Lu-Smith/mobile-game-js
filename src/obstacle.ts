@@ -13,6 +13,7 @@ export default class Obstacle {
     collisionX: number;
     collisionY: number;
     collisionRadius: number;
+    image: CanvasImageSource;
 
     constructor(game: Game, x: number) {
         this.game = game;
@@ -27,6 +28,7 @@ export default class Obstacle {
         this.collisionRadius = this.scaledWidth * 0.5;
         this.speedY = Math.random() < 0.5  ? -1 * this.game.ratio : 1 * this.game.ratio;
         this.markedForDeletion = false;
+        this.image = document.getElementById('smallGears') as CanvasImageSource;
     }
     update() {
         this.x -= this.game.speed;
@@ -37,7 +39,7 @@ export default class Obstacle {
             if (this.y <= 0 || this.y >= this.game.height - this.scaledHeigth) {
                 this.speedY *= -1;
             }
-        } else {
+        } else {   
             this.speedY += 0.1;
         }        
         if (this.isOffScreen()) {
