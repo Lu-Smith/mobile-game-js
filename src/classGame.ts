@@ -26,6 +26,8 @@ export default class Game {
     timer: number;
     message1: string;
     message2: string;
+    minSpeed: number;
+    maxSpeed: number;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -45,6 +47,8 @@ export default class Game {
         this.timer = 0;
         this.message1 = '';
         this.message2 = '';
+        this.minSpeed = 0;
+        this.maxSpeed = 0;
         
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -125,8 +129,7 @@ export default class Game {
     formatTimer() {
         return (this.timer * 0.001).toFixed(1);
     }
-    drawStatusText() {
-        this.context.save();
+    drawStatusText() {     
         this.context.fillText('Score: ' + this.score, this.width - 10, 30);
         this.context.textAlign = 'left';
         this.context.fillText('Timer: ' + this.formatTimer(), 10, 30); 
@@ -145,6 +148,10 @@ export default class Game {
             this.context.fillText(this.message2, this.width * 0.5, this.height * 0.5 - 20);
             this.context.fillText('Press "R" to try again!', this.width * 0.5, this.height * 0.5);
         }
+        this.context.save();
+        for (let i = 0; i < this.player.energy; i++) {
+            this.context.fillRect(10 + i * 5, 40, 2, 15);
+        } 
         this.context.restore();
     }
 }
