@@ -10,6 +10,9 @@ export default class Obstacle {
     y: number;
     speedY: number;
     markedForDeletion: boolean;
+    collisionX: number;
+    collisionY: number;
+    collisionRadius: number;
 
     constructor(game: Game, x: number) {
         this.game = game;
@@ -19,12 +22,17 @@ export default class Obstacle {
         this.scaledHeigth = this.spriteHeigth * this.game.ratio;
         this.x = x;
         this.y = Math.random() * (this.game.height - this.scaledHeigth);
+        this.collisionX = 0;
+        this.collisionY = 0;
+        this.collisionRadius = this.scaledWidth * 0.5;
         this.speedY = Math.random() < 0.5  ? -1 * this.game.ratio : 1 * this.game.ratio;
         this.markedForDeletion = false;
     }
     update() {
         this.x -= this.game.speed;
         this.y += this.speedY;
+        this.collisionX = this.x + this.scaledWidth * 0.5;
+        this.collisionY = this.y + this.scaledHeigth * 0.5;
         if (this.y <= 0 || this.y >= this.game.height - this.scaledHeigth) {
             this.speedY *= -1;
         }
@@ -37,6 +45,10 @@ export default class Obstacle {
     } 
     draw(){
         this.game.context.fillRect(this.x, this.y, this.scaledWidth, this.scaledHeigth);
+        this.game.context.beginPath();
+        this.game.context.arc(this.collisionX, this.collisionY, 
+            this.collisionRadius, 0, Math.PI * 2);
+        this.game.context.stroke();
     }
     resize(){
         this.scaledWidth = this.spriteWidth * this.game.ratio;
