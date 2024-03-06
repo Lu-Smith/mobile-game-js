@@ -44,7 +44,7 @@ export default class Game {
         this.background = new Background(this);
         this.player = new Player(this);
         this.obstacles = [];
-        this.numberOfObstacles = 1;
+        this.numberOfObstacles = 5;
         this.gravity = 0; 
         this.speed = 0;
         this.score = 0;
@@ -77,7 +77,7 @@ export default class Game {
         //mouse controls
          window.addEventListener('keydown', e => {
             if (e.key === ' ' || e.key === 'Enter') this.player.flap();
-            if (e.key === 'Shift' || e.key.toLowerCase() === 'c') this.player.startCharge();
+            if (e.key === 'Shift' || e.key.toLowerCase() === 'c') this.player.startCharge();                
         });
 
         //mouse controls
