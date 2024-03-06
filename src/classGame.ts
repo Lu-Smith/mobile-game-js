@@ -31,6 +31,8 @@ export default class Game {
     eventTimer: number;
     eventInterval: number;
     eventUpdate: boolean;
+    touchStartX: number;
+    swipeDistance: number;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -55,6 +57,8 @@ export default class Game {
         this.eventTimer = 0;
         this.eventInterval = 150;
         this.eventUpdate = false;
+        this.touchStartX = 0;
+        this.swipeDistance = 50;
         
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -77,9 +81,16 @@ export default class Game {
         });
 
         //mouse controls
-        this.canvas.addEventListener('touchstart', () => {
+        this.canvas.addEventListener('touchstart', e => {
             this.player.flap();
+            this.touchStartX = e.changedTouches[0].pageX;
         });
+
+        this.canvas.addEventListener('touchmove', e => {
+            if (e.changedTouches[0].pageX - this.touchStartX > this.swipeDistance) {
+                this.player.startCharge();
+            }
+        })
     }
     resize(width: number, height: number) {
         this.canvas.width = width;
@@ -145,7 +156,7 @@ export default class Game {
             this.eventTimer += deltaTime;
             this.eventUpdate = false;
         } else {
-            this.eventTimer = 0;
+            this.eventTimer = this.eventTimer % this.eventInterval;
             this.eventUpdate = true;
         }
     }
