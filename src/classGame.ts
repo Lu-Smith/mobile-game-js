@@ -36,6 +36,7 @@ export default class Game {
     touchStartX: number;
     swipeDistance: number;
     debug: boolean;
+    bottomMargin: number;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -53,6 +54,7 @@ export default class Game {
         this.speed = 0;
         this.score = 0;
         this.gameOver = false;
+        this.bottomMargin = 0;
         this.timer = 0;
         this.message1 = '';
         this.message2 = '';
@@ -119,6 +121,7 @@ export default class Game {
         this.height = this.canvas.height;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
 
+        this.bottomMargin = Math.floor(50 * this.ratio);
         this.gravity = 0.15 * this.ratio;
         this.speed = 2 * this.ratio;
         this.minSpeed = this.speed;
@@ -179,11 +182,13 @@ export default class Game {
     triggerGameOver() {
         if (!this.gameOver) {
             this.gameOver = true;
-            if (this.obstacles.length <=0) {
+            if (this.obstacles.length <= 0) {
+                console.log('won');  
                 this.sound.play(this.sound.win);
                 this.message1 = 'Nailed it!';
                 this.message2 = 'Can you do it faster than ' +  this.formatTimer() + ' seconds?';
             } else {
+                console.log('lost');     
                 this.sound.play(this.sound.lose);
                 this.message1 = 'Getting rusty?';
                 this.message2 = 'Collision time ' +  this.formatTimer() + ' seconds!';
