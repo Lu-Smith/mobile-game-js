@@ -21,6 +21,7 @@ export default class Player {
     barSize: number;
     image: CanvasImageSource;
     frameY: number;
+    collisionXStart: number;
 
     constructor(game: Game) {
         this.game =  game;
@@ -43,6 +44,7 @@ export default class Player {
         this.barSize = 0;
         this.image = document.getElementById('player_fish') as CanvasImageSource;
         this.frameY = 0;
+        this.collisionXStart = this.collisionX + this.collisionRadius * 0.8;
     }
     update() {
         this.handleEnergy();
@@ -75,7 +77,7 @@ export default class Player {
         this.y = this.game.height * 0.5 - this.height * 0.5;
         this.speedY = -8 * this.game.ratio;
         this.flapSpeed = 5 * this.game.ratio;
-        this.collisionRadius = this.width * 0.3;  
+        this.collisionRadius = this.width * 0.25;  
         this.collisionX = this.x + this.width * 0.5;
         this.collided = false;
         this.barSize = Math.floor(5 * this.game.ratio);
