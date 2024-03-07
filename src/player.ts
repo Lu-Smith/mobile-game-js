@@ -91,7 +91,7 @@ export default class Player {
             this.wingsCharge();
             this.game.sound.play(this.game.sound.charge);  
         } else {
-            this.stopCharge();
+            this.stopCharge(); 
         }
     }
     stopCharge() {
@@ -112,7 +112,7 @@ export default class Player {
         this.frameY = 3;
     }
     isTouchingTop() {
-        return this.y <= 100;
+        return this.y <= 100 * this.game.ratio;
     }
     isTouchingBottom() {
         return this.y >= this.game.height - this.height - this.game.bottomMargin;
@@ -137,6 +137,8 @@ export default class Player {
             this.game.sound.play(this.game.sound.flapSounds[Math.floor(Math.random() * 5)]);
             this.speedY = -this.flapSpeed;
             this.wingsDown();          
-        }
+        } else {
+            console.log('top');
+        }   
     }    
 }                                 
