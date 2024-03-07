@@ -85,9 +85,14 @@ export default class Player {
         this.charging = false;
     }
     startCharge() {
-        this.charging = true;
-        this.game.speed = this.game.maxSpeed;
-        this.wingsCharge();
+        if (this.energy >= this.minEnergy && !this.charging) {
+            this.charging = true;
+            this.game.speed = this.game.maxSpeed;
+            this.wingsCharge();
+            this.game.sound.play(this.game.sound.charge);  
+        } else {
+            this.startCharge();
+        }
     }
     stopCharge() {
         this.charging = false;
