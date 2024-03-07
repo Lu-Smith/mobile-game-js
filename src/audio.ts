@@ -5,7 +5,9 @@ export default class AudioControls {
     flap3: HTMLAudioElement;
     flap4: HTMLAudioElement;
     flap5: HTMLAudioElement;
-    flapSounds: HTMLAudioElement[];
+    flapSounds: HTMLAudioElement[]; 
+    win: HTMLAudioElement;
+    lose: HTMLAudioElement;
 
     constructor() {
         this.charge = document.getElementById('charge') as HTMLAudioElement ;
@@ -15,6 +17,8 @@ export default class AudioControls {
         this.flap4 = document.getElementById('flap4') as HTMLAudioElement ;
         this.flap5 = document.getElementById('flap5') as HTMLAudioElement ;
         this.flapSounds = [this.flap1, this.flap2, this.flap3, this.flap4, this.flap5];
+        this.win = document.getElementById('win') as HTMLAudioElement ;
+        this.lose = document.getElementById('lose') as HTMLAudioElement ;
     }
     play(sound: HTMLAudioElement ) {
         sound.currentTime = 0;
