@@ -58,10 +58,12 @@ export default class Obstacle {
     } 
     draw(){
         this.game.context.drawImage(this.image, this.frameX * this.spriteWidth , 0, this.spriteWidth, this.spriteHeigth, this.x, this.y, this.scaledWidth, this.scaledHeigth);
-        this.game.context.beginPath();
-        this.game.context.arc(this.collisionX, this.collisionY, 
-            this.collisionRadius, 0, Math.PI * 2);
-        this.game.context.stroke();
+        if (this.game.debug) {
+            this.game.context.beginPath();
+            this.game.context.arc(this.collisionX, this.collisionY, 
+                this.collisionRadius, 0, Math.PI * 2);
+            this.game.context.stroke();
+        }
     }
     resize(){
         this.scaledWidth = this.spriteWidth * this.game.ratio;

@@ -33,6 +33,7 @@ export default class Game {
     eventUpdate: boolean;
     touchStartX: number;
     swipeDistance: number;
+    debug: boolean;
 
     constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -59,6 +60,7 @@ export default class Game {
         this.eventUpdate = false;
         this.touchStartX = 0;
         this.swipeDistance = 50;
+        this.debug = false;
         
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -82,7 +84,8 @@ export default class Game {
          window.addEventListener('keydown', e => {
             if (e.key === ' ' || e.key === 'Enter') this.player.flap();
             if (e.key === 'Shift' || e.key.toLowerCase() === 'c') this.player.startCharge();  
-            if (e.key.toLowerCase() === 'r') this.resize(window.innerWidth, window.innerHeight);              
+            if (e.key.toLowerCase() === 'r') this.resize(window.innerWidth, window.innerHeight);
+            if (e.key.toLowerCase() === 'd') this.debug = !this.debug;                 
         });
 
         window.addEventListener('keyup', () => {
