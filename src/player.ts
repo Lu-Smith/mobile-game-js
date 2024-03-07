@@ -91,7 +91,7 @@ export default class Player {
             this.wingsCharge();
             this.game.sound.play(this.game.sound.charge);  
         } else {
-            this.startCharge();
+            this.stopCharge();
         }
     }
     stopCharge() {
