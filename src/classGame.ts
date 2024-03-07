@@ -112,7 +112,7 @@ export default class Game {
         this.canvas.height = height;
         // this.context.fillStyle = 'blue';
         this.context.textAlign = 'right';
-        this.context.lineWidth = 3;
+        this.context.lineWidth = 1;
         this.context.strokeStyle = 'white';
         this.context.font = '15px Bungee';
         this.width = this.canvas.width;
@@ -176,19 +176,26 @@ export default class Game {
             this.eventUpdate = true;
         }
     }
+    triggerGameOver() {
+        if (!this.gameOver) {
+            this.gameOver = true;
+            if (this.obstacles.length <=0) {
+                this.sound.play(this.sound.win);
+                this.message1 = 'Nailed it!';
+                this.message2 = 'Can you do it faster than ' +  this.formatTimer() + ' seconds?';
+            } else {
+                this.sound.play(this.sound.lose);
+                this.message1 = 'Getting rusty?';
+                this.message2 = 'Collision time ' +  this.formatTimer() + ' seconds!';
+            }
+        }
+    }
     drawStatusText() {   
         this.context.save();  
         this.context.fillText('Score: ' + this.score, this.width - 10, 30);
         this.context.textAlign = 'left';
         this.context.fillText('Timer: ' + this.formatTimer(), 10, 30); 
         if (this.gameOver) {
-            if (this.player.collided) {
-                this.message1 = 'Getting rusty?';
-                this.message2 = 'Collision time ' +  this.formatTimer() + ' seconds!' ;
-            } else if (this.obstacles.length <= 0) {
-                this.message1 = 'Nailed it!';
-                this.message2 = 'Can you do it faster than ' +  this.formatTimer() + ' seconds?';
-            }
             this.context.textAlign = 'center';
             this.context.font = '30px Bungee';
             this.context.fillText(this.message1, this.width * 0.5, this.height * 0.5 - 40);
