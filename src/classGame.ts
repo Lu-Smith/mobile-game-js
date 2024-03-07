@@ -51,7 +51,7 @@ export default class Game {
         this.player = new Player(this);
         this.sound = new AudioControls();
         this.obstacles = [];
-        this.numberOfObstacles = 5;
+        this.numberOfObstacles = 2;
         this.gravity = 0; 
         this.speed = 0;
         this.score = 0;
@@ -186,15 +186,13 @@ export default class Game {
         }
     }
     triggerGameOver() {
-        if (!this.gameOver) {
-            this.gameOver = true;
-            if (this.obstacles.length <= 0) {
-                console.log('won');  
+        if (!this.gameOver) { 
+            this.gameOver = true; 
+            if (this.obstacles.length <= 0 ) { 
                 this.sound.play(this.sound.win);
                 this.message1 = 'Nailed it!';
                 this.message2 = 'Can you do it faster than ' +  this.formatTimer() + ' seconds?';
-            } else {
-                console.log('lost');     
+            } else {   
                 this.sound.play(this.sound.lose);
                 this.message1 = 'Getting rusty?';
                 this.message2 = 'Collision time ' +  this.formatTimer() + ' seconds!';
