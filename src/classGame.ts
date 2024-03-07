@@ -51,7 +51,7 @@ export default class Game {
         this.player = new Player(this);
         this.sound = new AudioControls();
         this.obstacles = [];
-        this.numberOfObstacles = 2;
+        this.numberOfObstacles = 30;
         this.gravity = 0; 
         this.speed = 0;
         this.score = 0;
@@ -124,7 +124,6 @@ export default class Game {
     resize(width: number, height: number) {
         this.canvas.width = width;
         this.canvas.height = height;
-        // this.context.fillStyle = 'blue';
         this.context.textAlign = 'right';
         this.context.lineWidth = 1;
         this.context.strokeStyle = 'white';
@@ -209,11 +208,14 @@ export default class Game {
     }
     drawStatusText() {   
         this.context.save();  
+        this.context.fillStyle = '#680747';
         this.context.fillText('Score: ' + this.score, this.width - this.smallFont, this.largeFont);
         this.context.textAlign = 'left';
+        this.context.fillStyle = '#113f67';
         this.context.fillText('Timer: ' + this.formatTimer(), this.smallFont, this.largeFont); 
         if (this.gameOver) {
             this.context.textAlign = 'center';
+            this.context.fillStyle = '#222831      ';
             this.context.font = this.largeFont + 'px Bungee';
             this.context.fillText(this.message1, this.width * 0.5, this.height * 0.5 - this.largeFont, this.width - 20);
             this.context.font = this.smallFont + 'px Bungee';
