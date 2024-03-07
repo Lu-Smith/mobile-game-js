@@ -14,6 +14,7 @@ export default class Obstacle {
     collisionY: number;
     collisionRadius: number;
     image: CanvasImageSource;
+    frameX: number;
 
     constructor(game: Game, x: number) {
         this.game = game;
@@ -29,6 +30,7 @@ export default class Obstacle {
         this.speedY = Math.random() < 0.5  ? -1 * this.game.ratio : 1 * this.game.ratio;
         this.markedForDeletion = false;
         this.image = document.getElementById('smallGears') as CanvasImageSource;
+        this.frameX = Math.floor(Math.random() * 4);
     }
     update() {
         this.x -= this.game.speed;
@@ -52,10 +54,10 @@ export default class Obstacle {
             this.game.gameOver = true;
             this.game.player.collided = true;
             this.game.player.stopCharge();
-        }
+        } 
     } 
     draw(){
-        this.game.context.fillRect(this.x, this.y, this.scaledWidth, this.scaledHeigth);
+        this.game.context.drawImage(this.image, this.frameX * this.spriteWidth , 0, this.spriteWidth, this.spriteHeigth, this.x, this.y, this.scaledWidth, this.scaledHeigth);
         this.game.context.beginPath();
         this.game.context.arc(this.collisionX, this.collisionY, 
             this.collisionRadius, 0, Math.PI * 2);
