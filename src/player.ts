@@ -134,9 +134,9 @@ export default class Player {
     flap() {          
         this.stopCharge();
         if(!this.isTouchingTop()) {
-            this.game.sound.play(this.game.sound.flap1);
+            this.game.sound.play(this.game.sound.flapSounds[Math.floor(Math.random() * 5)]);
             this.speedY = -this.flapSpeed;
             this.wingsDown();          
         }
     }    
-}                     
+}                                 
