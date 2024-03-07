@@ -28,6 +28,8 @@ export default class Game {
     timer: number;
     message1: string;
     message2: string;
+    smallFont: number;
+    largeFont: number;
     minSpeed: number;
     maxSpeed: number;
     eventTimer: number;
@@ -58,6 +60,8 @@ export default class Game {
         this.timer = 0;
         this.message1 = '';
         this.message2 = '';
+        this.smallFont = 20;
+        this.largeFont = 45;
         this.minSpeed = 0;
         this.maxSpeed = 0;
         this.eventTimer = 0;
@@ -122,6 +126,8 @@ export default class Game {
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
 
         this.bottomMargin = Math.floor(50 * this.ratio);
+        this.smallFont = Math.ceil(20 * this.ratio);
+        this.largeFont = Math.ceil(45 * this.ratio);
         this.gravity = 0.15 * this.ratio;
         this.speed = 2 * this.ratio;
         this.minSpeed = this.speed;
@@ -202,11 +208,11 @@ export default class Game {
         this.context.fillText('Timer: ' + this.formatTimer(), 10, 30); 
         if (this.gameOver) {
             this.context.textAlign = 'center';
-            this.context.font = '30px Bungee';
-            this.context.fillText(this.message1, this.width * 0.5, this.height * 0.5 - 40);
-            this.context.font = '15px Bungee';
-            this.context.fillText(this.message2, this.width * 0.5, this.height * 0.5 - 20);
-            this.context.fillText('Press "R" to try again!', this.width * 0.5, this.height * 0.5);
+            this.context.font = this.largeFont + 'px Bungee';
+            this.context.fillText(this.message1, this.width * 0.5, this.height * 0.5 - this.largeFont, this.width - 20);
+            this.context.font = this.smallFont + 'px Bungee';
+            this.context.fillText(this.message2, this.width * 0.5, this.height * 0.5 - this.smallFont, this.width - 40);
+            this.context.fillText('Press "R" to try again!', this.width * 0.5, this.height * 0.5, this.width - 40);
         }
         if (this.player.energy <= this.player.minEnergy) this.context.fillStyle = 'red';
         else if (this.player.energy >= this.player.maxEnergy - 5) this.context.fillStyle = 'green';
