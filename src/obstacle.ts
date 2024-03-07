@@ -68,6 +68,7 @@ export default class Obstacle {
     resize(){
         this.scaledWidth = this.spriteWidth * this.game.ratio;
         this.scaledHeigth = this.spriteHeigth * this.game.ratio;
+        this.collisionRadius = this.scaledWidth * 0.4;
     }
     isOffScreen() {
         return this.x < -this.scaledWidth || this.y > this.game.height;
