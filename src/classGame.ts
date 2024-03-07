@@ -60,8 +60,8 @@ export default class Game {
         this.timer = 0;
         this.message1 = '';
         this.message2 = '';
-        this.smallFont = 20;
-        this.largeFont = 45;
+        this.smallFont = 20 * this.ratio;
+        this.largeFont = 45 * this.ratio;
         this.minSpeed = 0;
         this.maxSpeed = 0;
         this.eventTimer = 0;
@@ -120,14 +120,14 @@ export default class Game {
         this.context.textAlign = 'right';
         this.context.lineWidth = 1;
         this.context.strokeStyle = 'white';
-        this.context.font = '15px Bungee';
+     
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
-
         this.bottomMargin = Math.floor(50 * this.ratio);
         this.smallFont = Math.ceil(20 * this.ratio);
         this.largeFont = Math.ceil(45 * this.ratio);
+        this.context.font = this.smallFont + 'px Bungee';
         this.gravity = 0.15 * this.ratio;
         this.speed = 2 * this.ratio;
         this.minSpeed = this.speed;
@@ -203,9 +203,9 @@ export default class Game {
     }
     drawStatusText() {   
         this.context.save();  
-        this.context.fillText('Score: ' + this.score, this.width - 10, 30);
+        this.context.fillText('Score: ' + this.score, this.width - this.smallFont, this.largeFont);
         this.context.textAlign = 'left';
-        this.context.fillText('Timer: ' + this.formatTimer(), 10, 30); 
+        this.context.fillText('Timer: ' + this.formatTimer(), this.smallFont, this.largeFont); 
         if (this.gameOver) {
             this.context.textAlign = 'center';
             this.context.font = this.largeFont + 'px Bungee';
