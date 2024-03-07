@@ -84,7 +84,7 @@ export default class Player {
         this.frameY = 0;
         this.charging = false;
     }
-    startCharge() {
+    startCharge() {  
         if (this.energy >= this.minEnergy && !this.charging) {
             this.charging = true;
             this.game.speed = this.game.maxSpeed;
@@ -134,9 +134,9 @@ export default class Player {
     flap() {          
         this.stopCharge();
         if(!this.isTouchingTop()) {
+            this.game.sound.play(this.game.sound.flap1);
             this.speedY = -this.flapSpeed;
             this.wingsDown();          
         }
-      
-    }
-}
+    }    
+}                     
