@@ -10,7 +10,7 @@ export default class AudioControls {
     lose: HTMLAudioElement;
 
     constructor() {
-        this.charge = document.getElementById('charge') as HTMLAudioElement ;
+        this.charge = new Audio("/src/assets/sounds/charge.mp3");
         this.flap1 = document.getElementById('flap1') as HTMLAudioElement ;
         this.flap2 = document.getElementById('flap2') as HTMLAudioElement ;
         this.flap3 = document.getElementById('flap3') as HTMLAudioElement ;
