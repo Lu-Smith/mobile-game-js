@@ -20,6 +20,7 @@ export default class Player {
     charging: boolean;
     barSize: number;
     image: CanvasImageSource;
+    frameY: number;
 
     constructor(game: Game) {
         this.game =  game;
@@ -40,10 +41,12 @@ export default class Player {
         this.minEnergy = 15;
         this.charging = false;
         this.barSize = 0;
-        this.image = document.getElementById('player_fish') as CanvasImageSource;;
+        this.image = document.getElementById('player_fish') as CanvasImageSource;
+        this.frameY = 0;
     }
     update() {
         this.handleEnergy();
+        if (this.speedY >= 0) this.wingsUp();
         this.y += this.speedY;
         this.collisionY = this.y + this.height * 0.5;
         if (!this.isTouchingBottom() && !this.charging) {
@@ -54,10 +57,11 @@ export default class Player {
 
         if (this.isTouchingBottom()) {
             this.y = this.game.height - this.height;
+            this.wingsIdle();
         }
     } 
     draw() {
-        this.game.context.drawImage(this.image, 0, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+        this.game.context.drawImage(this.image, 0, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
         this.game.context.beginPath();
         this.game.context.arc(this.collisionX, this.collisionY, 
             this.collisionRadius, 0, Math.PI * 2);
@@ -69,18 +73,34 @@ export default class Player {
         this.y = this.game.height * 0.5 - this.height * 0.5;
         this.speedY = -8 * this.game.ratio;
         this.flapSpeed = 5 * this.game.ratio;
-        this.collisionRadius = this.width * 0.5;
+        this.collisionRadius = this.width * 0.5;  
         this.collisionX = this.x + this.width * 0.5;
         this.collided = false;
         this.barSize = Math.floor(5 * this.game.ratio);
+        this.frameY = 0;
+        this.charging = false;
     }
     startCharge() {
         this.charging = true;
         this.game.speed = this.game.maxSpeed;
+        this.wingsCharge();
     }
     stopCharge() {
         this.charging = false;
         this.game.speed = this.game.minSpeed;
+        this.wingsIdle();
+    }
+    wingsIdle() {
+        this.frameY = 0;
+    }
+    wingsDown() {
+        if (!this.charging ) this.frameY = 1;
+    }
+    wingsUp() {
+        if (!this.charging ) this.frameY = 2;
+    }
+    wingsCharge() {
+        this.frameY = 3;
     }
     isTouchingTop() {
         return this.y <= 100;
@@ -106,6 +126,7 @@ export default class Player {
         this.stopCharge();
         if(!this.isTouchingTop()) {
             this.speedY = -this.flapSpeed;
+            this.wingsDown();
         }
       
     }

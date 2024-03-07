@@ -72,12 +72,21 @@ export default class Game {
         //mouse controls      
         this.canvas.addEventListener('mousedown', () => {
             this.player.flap();
-        });  
+        });           
+
+        this.canvas.addEventListener('mouseup', () => {          
+            this.player.wingsUp();
+        }); 
 
         //mouse controls
          window.addEventListener('keydown', e => {
             if (e.key === ' ' || e.key === 'Enter') this.player.flap();
-            if (e.key === 'Shift' || e.key.toLowerCase() === 'c') this.player.startCharge();                
+            if (e.key === 'Shift' || e.key.toLowerCase() === 'c') this.player.startCharge();  
+            if (e.key.toLowerCase() === 'r') this.resize(window.innerWidth, window.innerHeight);              
+        });
+
+        window.addEventListener('keyup', () => {
+            this.player.wingsUp();              
         });
 
         //mouse controls
