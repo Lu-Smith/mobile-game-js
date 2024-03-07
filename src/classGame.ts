@@ -1,6 +1,7 @@
 import Player from './player';
 import Background from './background';
 import Obstacle from './obstacle';
+import AudioControls from './audio';
 
 interface Collidable {
     collisionX: number;
@@ -15,6 +16,7 @@ export default class Game {
     height: number;
     player: Player;
     obstacles: Obstacle[];
+    sound: AudioControls;
     numberOfObstacles: number;
     background: Background;
     baseHeight: number;
@@ -44,6 +46,7 @@ export default class Game {
         this.ratio = Number((this.height /this.baseHeight).toFixed(2));
         this.background = new Background(this);
         this.player = new Player(this);
+        this.sound = new AudioControls();
         this.obstacles = [];
         this.numberOfObstacles = 5;
         this.gravity = 0; 
@@ -129,6 +132,7 @@ export default class Game {
         this.score = 0;
         this.gameOver = false;
         this.timer = 0;
+        this.sound = this.sound;
 
     }
     render(deltaTime: number) {
@@ -192,7 +196,7 @@ export default class Game {
             this.context.fillText(this.message2, this.width * 0.5, this.height * 0.5 - 20);
             this.context.fillText('Press "R" to try again!', this.width * 0.5, this.height * 0.5);
         }
-        if (this.player.energy <= 20) this.context.fillStyle = 'red';
+        if (this.player.energy <= this.player.minEnergy) this.context.fillStyle = 'red';
         else if (this.player.energy >= this.player.maxEnergy - 5) this.context.fillStyle = 'green';
         for (let i = 0; i < this.player.energy; i++) {
             this.context.fillRect(10, this.height - 20 - this.player.barSize * i, 4 * this.player.barSize, this.player.barSize);
