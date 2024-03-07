@@ -73,7 +73,7 @@ export default class Game {
         
         this.resize(window.innerWidth, window.innerHeight);
 
-        window.addEventListener('resize', (e: UIEvent) => {
+        window.addEventListener('resize', e => {
             const target = e.currentTarget as Window;
             if (target) {
                 this.resize(target.innerWidth, target.innerHeight);
@@ -86,7 +86,9 @@ export default class Game {
         });           
 
         this.canvas.addEventListener('mouseup', () => {          
-            this.player.wingsUp();
+            setTimeout(() => {
+                this.player.wingsUp();
+            }, 50)
         }); 
 
         //mouse controls
@@ -101,17 +103,23 @@ export default class Game {
             this.player.wingsUp();              
         });
 
-        //mouse controls
+        //touch controls
         this.canvas.addEventListener('touchstart', e => {
             this.player.flap();
             this.touchStartX = e.changedTouches[0].pageX;
         });
 
         this.canvas.addEventListener('touchmove', e => {
+           e.preventDefault();
+        })
+
+        this.canvas.addEventListener('touchend', e => {
             if (e.changedTouches[0].pageX - this.touchStartX > this.swipeDistance) {
                 this.player.startCharge();
+            } else {
+                this.player.flap();
             }
-        })
+        });
     }
     resize(width: number, height: number) {
         this.canvas.width = width;
