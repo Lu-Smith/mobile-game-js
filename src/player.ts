@@ -137,8 +137,6 @@ export default class Player {
             this.game.sound.play(this.game.sound.flapSounds[Math.floor(Math.random() * 5)]);
             this.speedY = -this.flapSpeed;
             this.wingsDown();          
-        } else {
-            console.log('top');
         }   
     }    
 }                                 
