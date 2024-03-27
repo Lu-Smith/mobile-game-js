@@ -83,6 +83,7 @@ export default class Game {
         //mouse controls      
         this.canvas.addEventListener('mousedown', () => {
             this.player.flap();
+            if (this.gameOver) this.resize(window.innerWidth, window.innerHeight);
         });           
 
         this.canvas.addEventListener('mouseup', () => {          
@@ -114,11 +115,16 @@ export default class Game {
         })
 
         this.canvas.addEventListener('touchend', e => {
-            if (e.changedTouches[0].pageX - this.touchStartX > this.swipeDistance) {
-                this.player.startCharge();
+            if (!this.gameOver) {
+                if (e.changedTouches[0].pageX - this.touchStartX > this.swipeDistance) {
+                    this.player.startCharge();
+                } else {
+                    this.player.flap();
+                }
             } else {
-                this.player.flap();
+                this.resize(window.innerWidth, window.innerHeight);
             }
+   
         });
     }
     resize(width: number, height: number) {
@@ -162,7 +168,7 @@ export default class Game {
         this.obstacles.forEach(obstacle => {
             obstacle.update();
             obstacle.draw();
-        })
+        })      
     }
     createObstacles() {
         this.obstacles = [];
@@ -220,7 +226,8 @@ export default class Game {
             this.context.fillText(this.message1, this.width * 0.5, this.height * 0.5 - this.largeFont, this.width - 20);
             this.context.font = this.smallFont + 'px Bungee';
             this.context.fillText(this.message2, this.width * 0.5, this.height * 0.5 - this.smallFont, this.width - 40);
-            this.context.fillText('Press "R" to try again!', this.width * 0.5, this.height * 0.5, this.width - 40);
+            this.context.fillText('Press "R" or tap to try again!', this.width * 0.5, this.height * 0.5, this.width - 40);
+           
         }
         if (this.player.energy <= this.player.minEnergy) this.context.fillStyle = 'red';
         else if (this.player.energy >= this.player.maxEnergy - 5) this.context.fillStyle = 'green';
