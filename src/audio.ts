@@ -1,3 +1,12 @@
+import Charge from '../src/assets/media/charge.mp3';
+import Flap1 from '../src/assets/media/flap1.mp3';
+import Flap2 from '../src/assets/media/flap2.mp3';
+import Flap3 from '../src/assets/media/flap3.mp3';
+import Flap4 from '../src/assets/media/flap4.mp3';
+import Flap5 from '../src/assets/media/flap5.mp3';
+import Win from '../src/assets/media/win.mp3';
+import Lose from '../src/assets/media/lose.mp3';
+
 export default class AudioControls {
     charge: HTMLAudioElement;
     flap1: HTMLAudioElement;
@@ -8,17 +17,24 @@ export default class AudioControls {
     flapSounds: HTMLAudioElement[]; 
     win: HTMLAudioElement;
     lose: HTMLAudioElement;
+    createAudioElement: (src: string) => HTMLAudioElement;
 
     constructor() {
-        this.charge = document.getElementById('charge') as HTMLAudioElement ;
-        this.flap1 = document.getElementById('flap1') as HTMLAudioElement ;
-        this.flap2 = document.getElementById('flap2') as HTMLAudioElement ;
-        this.flap3 = document.getElementById('flap3') as HTMLAudioElement ;
-        this.flap4 = document.getElementById('flap4') as HTMLAudioElement ;
-        this.flap5 = document.getElementById('flap5') as HTMLAudioElement ;
+        this.createAudioElement = (src: string) => {
+            const audio = document.createElement('audio');
+            audio.src = src;
+            return audio;
+        };
+
+        this.charge = this.createAudioElement(Charge);
+        this.flap1 = this.createAudioElement(Flap1);
+        this.flap2 = this.createAudioElement(Flap2);
+        this.flap3 = this.createAudioElement(Flap3);
+        this.flap4 = this.createAudioElement(Flap4);
+        this.flap5 = this.createAudioElement(Flap5);
+        this.win = this.createAudioElement(Win);
+        this.lose = this.createAudioElement(Lose);
         this.flapSounds = [this.flap1, this.flap2, this.flap3, this.flap4, this.flap5];
-        this.win = document.getElementById('win') as HTMLAudioElement ;
-        this.lose = document.getElementById('lose') as HTMLAudioElement ;
     }
     play(sound: HTMLAudioElement ) {
         sound.currentTime = 0;
